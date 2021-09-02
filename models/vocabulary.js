@@ -13,6 +13,7 @@ const vocabularySchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
 	createdDate: {
 		type: Date,
 		required: true,

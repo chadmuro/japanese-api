@@ -19,6 +19,7 @@ const vocabulary_post = async (req, res) => {
 		japanese: req.body.japanese,
 		english: req.body.english,
 		reading: req.body.reading,
+		categories: req.body.categories,
 	});
 	try {
 		const newVocabulary = await vocabulary.save();
@@ -37,6 +38,9 @@ const vocabulary_patch = async (req, res) => {
 	}
 	if (req.body.reading != null) {
 		res.vocabulary.reading = req.body.reading;
+	}
+	if (req.body.categories != null) {
+		res.vocabulary.categories = req.body.categories;
 	}
 	try {
 		const updatedVocabulary = await res.vocabulary.save();
