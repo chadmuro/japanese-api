@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const vocabularyRoutes = require('./routes/vocabularyRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -18,7 +19,7 @@ const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
-app.use(express.static(path.join(_dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
