@@ -10,19 +10,24 @@ const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.DATABASE_URL, {
-	useNewUrlParser: true,
-	useCreateIndex: true,
-	useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
+app.use(express.static(path.join(_dirname, 'build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 app.use(express.json());
 
 const allowList = [
-	'http://localhost:3000',
-	'https://japanese-for-developers.netlify.app',
+  'http://localhost:3000',
+  'https://japanese-for-developers.netlify.app',
 ];
 
 app.use(cors({ origin: allowList }));
@@ -31,5 +36,5 @@ app.use('/vocabulary', vocabularyRoutes);
 app.use('/category', categoryRoutes);
 
 app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
