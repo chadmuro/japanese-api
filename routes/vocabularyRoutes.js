@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const vocabularyController = require('../controllers/vocabularyController');
+const Vocabulary = require('../models/vocabulary');
 
 // GET ALL
 router.get('/', vocabularyController.vocabulary_get_all);
@@ -19,18 +20,18 @@ router.delete('/:id', getVocabulary, vocabularyController.vocabulary_delete);
 
 // Middleware
 async function getVocabulary(req, res, next) {
-	let vocabulary;
-	try {
-		vocabulary = await Vocabulary.findById(req.params.id);
-		console.log(vocabulary);
-		if (vocabulary == null) {
-			return res.status(404).json({ message: 'Cannot find vocabulary' });
-		}
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
-	}
-	res.vocabulary = vocabulary;
-	next();
+  let vocabulary;
+  try {
+    vocabulary = await Vocabulary.findById(req.params.id);
+    console.log(vocabulary);
+    if (vocabulary == null) {
+      return res.status(404).json({ message: 'Cannot find vocabulary' });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.vocabulary = vocabulary;
+  next();
 }
 
 module.exports = router;
