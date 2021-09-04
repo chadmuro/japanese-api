@@ -19,11 +19,6 @@ const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
-app.use(express.static(path.join(__dirname, '../client/build')));
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
-
 app.use(express.json());
 
 const allowList = [
@@ -35,6 +30,11 @@ app.use(cors({ origin: allowList }));
 
 app.use('vocabulary', vocabularyRoutes);
 app.use('category', categoryRoutes);
+
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
