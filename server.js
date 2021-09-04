@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const vocabularyRoutes = require('./routes/vocabularyRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -20,6 +21,11 @@ db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '/client/build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+
 const allowList = [
   'http://localhost:3000',
   'https://japanese-for-developers.netlify.app',
@@ -27,8 +33,8 @@ const allowList = [
 
 app.use(cors({ origin: allowList }));
 
-app.use('vocabulary', vocabularyRoutes);
-app.use('category', categoryRoutes);
+app.use('/vocabulary', vocabularyRoutes);
+app.use('/category', categoryRoutes);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
