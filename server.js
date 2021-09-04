@@ -21,6 +21,11 @@ db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '/client/build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+
 const allowList = [
   'http://localhost:3000',
   'https://japanese-for-developers.netlify.app',
@@ -30,11 +35,6 @@ app.use(cors({ origin: allowList }));
 
 app.use('vocabulary', vocabularyRoutes);
 app.use('category', categoryRoutes);
-
-app.use(express.static(path.join(__dirname, '/client/build')));
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
