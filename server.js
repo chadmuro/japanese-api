@@ -19,11 +19,6 @@ const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
-app.use(express.static(path.join(__dirname, '../client/build')));
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
-
 app.use(express.json());
 
 const allowList = [
