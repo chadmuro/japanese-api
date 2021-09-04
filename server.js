@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
 const vocabularyRoutes = require('./routes/vocabularyRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -20,11 +19,6 @@ db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
-
-app.use(express.static(path.join(__dirname, '/client/build')));
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-});
 
 const allowList = [
   'http://localhost:3000',
