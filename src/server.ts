@@ -1,5 +1,5 @@
 require('dotenv').config();
-const express = require('express');
+import express from 'express';
 // const path = require('path');
 const cors = require('cors');
 const vocabularyRoutes = require('./routes/vocabularyRoutes');
@@ -16,7 +16,7 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
-db.on('error', error => console.log(error));
+db.on('error', (error: any) => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());

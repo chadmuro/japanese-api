@@ -4,17 +4,22 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node build/server.js",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc -p ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.7.10",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.13.3"
+    "mongoose": "^5.13.3",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   },
   "engines": {
     "node": "14.16.1"
