@@ -1,9 +1,15 @@
-export interface ICategory {
+import { Document } from 'mongoose';
+
+export interface ICategory extends Document {
   _id: string;
   name: string;
+  vocabularies: {
+    _id: string;
+    name: string;
+  }[];
 }
 
-export interface IVocabulary {
+export interface IVocabulary extends Document {
   _id: string;
   japanese: string;
   reading: string;
@@ -13,6 +19,4 @@ export interface IVocabulary {
     _id: string;
     name: string;
   }[];
-  save: any;
-  remove: any;
 }

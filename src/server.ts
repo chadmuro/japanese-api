@@ -1,9 +1,9 @@
 require('dotenv').config();
 import express from 'express';
 // const path = require('path');
-const cors = require('cors');
-const vocabularyRoutes = require('./routes/vocabularyRoutes');
-const categoryRoutes = require('./routes/categoryRoutes');
+import cors from 'cors';
+import vocabularyRoutes from './routes/vocabularyRoutes';
+import categoryRoutes from './routes/categoryRoutes';
 
 const app = express();
 const port = process.env.PORT || 5000;

@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-const router = express.Router();
-const vocabularyController = require('../controllers/vocabularyController');
-const Vocabulary = require('../models/vocabulary');
+import vocabularyController from '../controllers/vocabularyController';
+import Vocabulary from '../models/vocabulary';
 import { IVocabulary } from '../constants/types';
+
+const router = express.Router();
 
 // GET ALL
 router.get('/', vocabularyController.vocabulary_get_all);
@@ -44,4 +45,4 @@ async function getVocabulary(
   next();
 }
 
-module.exports = router;
+export default router;

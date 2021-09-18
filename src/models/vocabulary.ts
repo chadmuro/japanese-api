@@ -22,4 +22,4 @@ const vocabularySchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Vocabulary', vocabularySchema);
+export default mongoose.model('Vocabulary', vocabularySchema);

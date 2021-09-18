@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { GetVocabularyResponse } from '../routes/vocabularyRoutes';
-const Vocabulary = require('../models/vocabulary');
+import Vocabulary from '../models/vocabulary';
+import Category from '../models/category';
 
 const vocabulary_get_all = async (req: Request, res: Response) => {
   try {
@@ -24,6 +25,10 @@ const vocabulary_post = async (req: Request, res: Response) => {
   });
   try {
     const newVocabulary = await vocabulary.save();
+    await Category.updateMany(
+      { _id: newVocabulary.categories },
+      { $push: { vocabularies: newVocabulary._id } }
+    );
     res.status(201).json(newVocabulary);
   } catch (err: any) {
     res.status(400).json({ message: err.message });
@@ -57,6 +62,10 @@ const vocabulary_delete = async (req: Request, res: GetVocabularyResponse) => {
   try {
     if (res.vocabulary) {
       await res.vocabulary.remove();
+      await Category.updateMany(
+        { _id: res.vocabulary.categories },
+        { $pull: { vocabularies: res.vocabulary._id } }
+      );
       res.json({ message: 'Deleted vocabulary' });
     }
   } catch (err: any) {
@@ -64,7 +73,7 @@ const vocabulary_delete = async (req: Request, res: GetVocabularyResponse) => {
   }
 };
 
-module.exports = {
+export default {
   vocabulary_get_all,
   vocabulary_get,
   vocabulary_post,

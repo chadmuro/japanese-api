@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-const router = express.Router();
-const categoryController = require('../controllers/categoryController');
-const Category = require('../models/category');
+import categoryController from '../controllers/categoryController';
+import Category from '../models/category';
 import { ICategory } from '../constants/types';
+
+const router = express.Router();
 
 // GET ALL
 router.get('/', categoryController.category_get_all);
@@ -12,6 +13,9 @@ router.get('/:id', getCategory, categoryController.category_get);
 
 // CREATE ONE
 router.post('/', categoryController.category_post);
+
+// DELETE ONE
+router.delete('/:id', getCategory, categoryController.category_delete);
 
 // create type for custom middleware response
 export interface GetCategoryResponse extends Response {
@@ -38,4 +42,4 @@ async function getCategory(
   next();
 }
 
-module.exports = router;
+export default router;
