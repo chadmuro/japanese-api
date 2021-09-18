@@ -13,7 +13,19 @@ const vocabulary_get_all = async (req: Request, res: Response) => {
 };
 
 const vocabulary_get = async (req: Request, res: GetVocabularyResponse) => {
-  res.json(res.vocabulary);
+  try {
+    if (res.vocabulary) {
+      const categoryIds = res.vocabulary.categories;
+      const categories = await Category.find({
+        _id: { $in: categoryIds },
+      });
+      let vocabulary = res.vocabulary;
+      vocabulary.categories = categories;
+      res.json(vocabulary);
+    }
+  } catch (err: any) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const vocabulary_post = async (req: Request, res: Response) => {
