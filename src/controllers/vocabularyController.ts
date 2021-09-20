@@ -3,6 +3,13 @@ import { GetVocabularyResponse } from '../routes/vocabularyRoutes';
 import Vocabulary from '../models/vocabulary';
 import Category from '../models/category';
 
+const handleErrors = (err: any) => {
+  if (err.code === 11000) {
+    return 'This vocabulary is already created';
+  }
+  return err.message;
+};
+
 const vocabulary_get_all = async (req: Request, res: Response) => {
   try {
     const vocabulary = await Vocabulary.find();
@@ -43,7 +50,8 @@ const vocabulary_post = async (req: Request, res: Response) => {
     );
     res.status(201).json(newVocabulary);
   } catch (err: any) {
-    res.status(400).json({ message: err.message });
+    const errorMessage = handleErrors(err);
+    res.status(400).json({ message: errorMessage });
   }
 };
 

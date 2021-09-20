@@ -3,6 +3,13 @@ import { GetCategoryResponse } from '../routes/categoryRoutes';
 import Category from '../models/category';
 import Vocabulary from '../models/vocabulary';
 
+const handleErrors = (err: any) => {
+  if (err.code === 11000) {
+    return 'This category is already created';
+  }
+  return err.message;
+};
+
 const category_get_all = async (req: Request, res: Response) => {
   try {
     const category = await Category.find();
@@ -36,7 +43,8 @@ const category_post = async (req: Request, res: Response) => {
     const newCategory = await category.save();
     res.status(201).json(newCategory);
   } catch (err: any) {
-    res.status(400).json({ message: err.message });
+    const errorMessage = handleErrors(err);
+    res.status(400).json({ message: errorMessage });
   }
 };
 

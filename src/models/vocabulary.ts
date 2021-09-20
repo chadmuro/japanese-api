@@ -3,16 +3,16 @@ import mongoose from 'mongoose';
 const vocabularySchema = new mongoose.Schema({
   japanese: {
     type: String,
-    required: true,
+    required: [true, 'Please enter a Japanese vocabulary'],
     unique: true,
   },
   english: {
     type: String,
-    required: true,
+    required: [true, 'Please enter an English reading'],
   },
   reading: {
     type: String,
-    required: true,
+    required: [true, 'Please enter a Japanese reading'],
   },
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   createdDate: {
