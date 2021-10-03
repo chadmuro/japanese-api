@@ -14,6 +14,9 @@ router.get('/:id', getCategory, categoryController.category_get);
 // CREATE ONE
 router.post('/', categoryController.category_post);
 
+// UPDATE ONE
+router.patch('/:id', getCategory, categoryController.category_patch);
+
 // DELETE ONE
 router.delete('/:id', getCategory, categoryController.category_delete);
 
@@ -31,7 +34,6 @@ async function getCategory(
   let category;
   try {
     category = await Category.findById(req.params.id);
-    console.log(category);
     if (category === null) {
       return res.status(404).json({ message: 'Cannot find category' });
     }

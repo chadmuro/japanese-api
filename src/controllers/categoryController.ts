@@ -48,6 +48,20 @@ const category_post = async (req: Request, res: Response) => {
   }
 };
 
+const category_patch = async (req: Request, res: GetCategoryResponse) => {
+  if (req.body.name !== null && res.category) {
+    res.category.name = req.body.name;
+  }
+  try {
+    if (res.category) {
+      const updatedCategory = await res.category.save();
+      res.json(updatedCategory);
+    }
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 const category_delete = async (req: Request, res: GetCategoryResponse) => {
   try {
     if (res.category) {
@@ -67,5 +81,6 @@ export default {
   category_get_all,
   category_get,
   category_post,
+  category_patch,
   category_delete,
 };

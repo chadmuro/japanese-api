@@ -55,17 +55,11 @@ const vocabulary_post = async (req: Request, res: Response) => {
   }
 };
 
-const vocabulary_patch = async (req: Request, res: GetVocabularyResponse) => {
-  if (req.body.japanese != null && res.vocabulary) {
+const vocabulary_put = async (req: Request, res: GetVocabularyResponse) => {
+  if (res.vocabulary) {
     res.vocabulary.japanese = req.body.japanese;
-  }
-  if (req.body.english != null && res.vocabulary) {
     res.vocabulary.english = req.body.english;
-  }
-  if (req.body.reading != null && res.vocabulary) {
     res.vocabulary.reading = req.body.reading;
-  }
-  if (req.body.categories != null && res.vocabulary) {
     res.vocabulary.categories = req.body.categories;
   }
   try {
@@ -97,6 +91,6 @@ export default {
   vocabulary_get_all,
   vocabulary_get,
   vocabulary_post,
-  vocabulary_patch,
+  vocabulary_put,
   vocabulary_delete,
 };

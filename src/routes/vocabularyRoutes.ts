@@ -15,7 +15,7 @@ router.get('/:id', getVocabulary, vocabularyController.vocabulary_get);
 router.post('/', vocabularyController.vocabulary_post);
 
 // UPDATE ONE
-router.patch('/:id', getVocabulary, vocabularyController.vocabulary_patch);
+router.put('/:id', getVocabulary, vocabularyController.vocabulary_put);
 
 // DELETE ONE
 router.delete('/:id', getVocabulary, vocabularyController.vocabulary_delete);
@@ -34,7 +34,6 @@ async function getVocabulary(
   let vocabulary;
   try {
     vocabulary = await Vocabulary.findById(req.params.id);
-    console.log(vocabulary);
     if (vocabulary == null) {
       return res.status(404).json({ message: 'Cannot find vocabulary' });
     }
