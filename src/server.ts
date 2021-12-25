@@ -5,6 +5,7 @@ import cors from 'cors';
 import vocabularyRoutes from './routes/vocabularyRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import userRoutes from './routes/userRoutes';
+import { authenticateToken } from './middleware/authenticateToken';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,8 +35,8 @@ const allowList = [
 
 app.use(cors({ origin: allowList }));
 
-app.use('/vocabulary', vocabularyRoutes);
-app.use('/category', categoryRoutes);
+app.use('/vocabulary', authenticateToken, vocabularyRoutes);
+app.use('/category', authenticateToken, categoryRoutes);
 app.use('/user', userRoutes);
 
 app.listen(port, () => {

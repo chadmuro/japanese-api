@@ -1,12 +1,8 @@
+require('dotenv').config();
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import User from '../models/user';
-
-// const user_get = async (req: Request, res: Response) => {
-//   try {
-
-//   }
-// }
 
 const user_post = async (req: Request, res: Response) => {
   try {
@@ -30,7 +26,12 @@ const user_login = async (req: Request, res: Response) => {
       res.status(400).json({ message: 'Cannot find user' });
     }
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.status(200).json(user);
+      const userForJwt = { username: user.username };
+      const accessToken = jwt.sign(
+        userForJwt,
+        process.env.ACCESS_TOKEN_SECRET as string
+      );
+      res.status(200).json({ accessToken });
     } else {
       res.status(400).json({ message: 'Wrong password' });
     }
