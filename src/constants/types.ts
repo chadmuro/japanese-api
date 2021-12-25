@@ -20,3 +20,9 @@ export interface IVocabulary extends Document {
     name: string;
   }[];
 }
+
+export interface IUser extends Document {
+  _id: string;
+  username: string;
+  password: string;
+}
