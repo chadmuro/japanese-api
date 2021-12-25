@@ -36,13 +36,13 @@ const vocabulary_get = async (req: Request, res: GetVocabularyResponse) => {
 };
 
 const vocabulary_post = async (req: Request, res: Response) => {
-  const vocabulary = new Vocabulary({
-    japanese: req.body.japanese,
-    english: req.body.english,
-    reading: req.body.reading,
-    categories: req.body.categories,
-  });
   try {
+    const vocabulary = new Vocabulary({
+      japanese: req.body.japanese,
+      english: req.body.english,
+      reading: req.body.reading,
+      categories: req.body.categories,
+    });
     const newVocabulary = await vocabulary.save();
     await Category.updateMany(
       { _id: newVocabulary.categories },

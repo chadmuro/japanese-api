@@ -36,10 +36,10 @@ const category_get = async (req: Request, res: GetCategoryResponse) => {
 };
 
 const category_post = async (req: Request, res: Response) => {
-  const category = new Category({
-    name: req.body.name,
-  });
   try {
+    const category = new Category({
+      name: req.body.name,
+    });
     const newCategory = await category.save();
     res.status(201).json(newCategory);
   } catch (err: any) {

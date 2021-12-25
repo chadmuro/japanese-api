@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import vocabularyRoutes from './routes/vocabularyRoutes';
 import categoryRoutes from './routes/categoryRoutes';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ app.use(cors({ origin: allowList }));
 
 app.use('/vocabulary', vocabularyRoutes);
 app.use('/category', categoryRoutes);
+app.use('/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
