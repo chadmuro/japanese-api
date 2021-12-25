@@ -21,7 +21,6 @@ const user_post = async (req: Request, res: Response) => {
 const user_login = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    console.log(user);
     if (!user) {
       res.status(400).json({ message: 'Cannot find user' });
     }
