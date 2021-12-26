@@ -30,7 +30,7 @@ app.use(express.json());
 
 const allowList = [
   'http://localhost:3000',
-  'https://japanese-for-developers.netlify.app',
+  'https://japanese-memory.netlify.app',
 ];
 
 app.use(cors({ origin: allowList }));
