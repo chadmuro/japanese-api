@@ -12,8 +12,14 @@ const user_post = async (req: Request, res: Response) => {
       password: hashedPassword,
     });
     const newUser = await user.save();
-    res.status(201).json(newUser);
+    const userForJwt = { username: user.username };
+    const accessToken = jwt.sign(
+      userForJwt,
+      process.env.ACCESS_TOKEN_SECRET as string
+    );
+    res.status(201).json({ username: user.username, accessToken });
   } catch (err: any) {
+    console.log(err);
     res.status(400).json({ message: err.message });
   }
 };
@@ -30,7 +36,7 @@ const user_login = async (req: Request, res: Response) => {
         userForJwt,
         process.env.ACCESS_TOKEN_SECRET as string
       );
-      res.status(200).json({ accessToken });
+      res.status(200).json({ username: user.username, accessToken });
     } else {
       res.status(400).json({ message: 'Wrong password' });
     }
