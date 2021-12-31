@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import vocabularyController from '../controllers/vocabularyController';
 import Vocabulary from '../models/vocabulary';
 import { IVocabulary } from '../constants/types';
+import { authorizeRole } from '../middleware/authorizeRole';
 
 const router = express.Router();
 
@@ -12,13 +13,23 @@ router.get('/', vocabularyController.vocabulary_get_all);
 router.get('/:id', getVocabulary, vocabularyController.vocabulary_get);
 
 // CREATE ONE
-router.post('/', vocabularyController.vocabulary_post);
+router.post('/', authorizeRole('admin'), vocabularyController.vocabulary_post);
 
 // UPDATE ONE
-router.put('/:id', getVocabulary, vocabularyController.vocabulary_put);
+router.put(
+  '/:id',
+  authorizeRole('admin'),
+  getVocabulary,
+  vocabularyController.vocabulary_put
+);
 
 // DELETE ONE
-router.delete('/:id', getVocabulary, vocabularyController.vocabulary_delete);
+router.delete(
+  '/:id',
+  authorizeRole('admin'),
+  getVocabulary,
+  vocabularyController.vocabulary_delete
+);
 
 // create type for custom middleware response
 export interface GetVocabularyResponse extends Response {

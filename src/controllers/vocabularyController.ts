@@ -65,6 +65,10 @@ const vocabulary_put = async (req: Request, res: GetVocabularyResponse) => {
   try {
     if (res.vocabulary) {
       const updatedVocabulary = await res.vocabulary.save();
+      await Category.updateMany(
+        { _id: updatedVocabulary.categories },
+        { $push: { vocabularies: updatedVocabulary._id } }
+      );
       res.json(updatedVocabulary);
     }
   } catch (err: any) {

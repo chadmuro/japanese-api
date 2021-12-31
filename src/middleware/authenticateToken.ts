@@ -1,5 +1,5 @@
 require('dotenv').config();
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export interface AuthRequest extends Request {

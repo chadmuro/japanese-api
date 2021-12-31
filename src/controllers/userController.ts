@@ -17,7 +17,9 @@ const user_post = async (req: Request, res: Response) => {
       userForJwt,
       process.env.ACCESS_TOKEN_SECRET as string
     );
-    res.status(201).json({ username: user.username, accessToken });
+    res
+      .status(201)
+      .json({ username: user.username, role: user.role, accessToken });
   } catch (err: any) {
     console.log(err);
     res.status(400).json({ message: err.message });
@@ -36,7 +38,9 @@ const user_login = async (req: Request, res: Response) => {
         userForJwt,
         process.env.ACCESS_TOKEN_SECRET as string
       );
-      res.status(200).json({ username: user.username, accessToken });
+      res
+        .status(200)
+        .json({ username: user.username, role: user.role, accessToken });
     } else {
       res.status(400).json({ message: 'Wrong password' });
     }

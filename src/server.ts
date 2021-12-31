@@ -1,6 +1,5 @@
 require('dotenv').config();
 import express from 'express';
-// const path = require('path');
 import cors from 'cors';
 import vocabularyRoutes from './routes/vocabularyRoutes';
 import categoryRoutes from './routes/categoryRoutes';
@@ -12,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(process.env.OLD_DATABASE_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -22,11 +21,6 @@ db.on('error', (error: any) => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
-
-// app.use(express.static(path.join(__dirname, '/client/build')));
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-// });
 
 const allowList = [
   'http://localhost:3000',

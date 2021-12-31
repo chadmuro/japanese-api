@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter a password'],
   },
+  role: {
+    type: String,
+    default: 'basic',
+  },
 });
 
 export default mongoose.model('User', userSchema);

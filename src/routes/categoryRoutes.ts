@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import categoryController from '../controllers/categoryController';
 import Category from '../models/category';
 import { ICategory } from '../constants/types';
+import { authorizeRole } from '../middleware/authorizeRole';
 
 const router = express.Router();
 
@@ -12,13 +13,23 @@ router.get('/', categoryController.category_get_all);
 router.get('/:id', getCategory, categoryController.category_get);
 
 // CREATE ONE
-router.post('/', categoryController.category_post);
+router.post('/', authorizeRole('admin'), categoryController.category_post);
 
 // UPDATE ONE
-router.patch('/:id', getCategory, categoryController.category_patch);
+router.patch(
+  '/:id',
+  authorizeRole('admin'),
+  getCategory,
+  categoryController.category_patch
+);
 
 // DELETE ONE
-router.delete('/:id', getCategory, categoryController.category_delete);
+router.delete(
+  '/:id',
+  authorizeRole('admin'),
+  getCategory,
+  categoryController.category_delete
+);
 
 // create type for custom middleware response
 export interface GetCategoryResponse extends Response {
