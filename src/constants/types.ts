@@ -19,6 +19,8 @@ export interface IVocabulary extends Document {
     _id: string;
     name: string;
   }[];
+  categoriesAdd?: { _id: string }[];
+  categoriesRemove?: { _id: string }[];
 }
 
 export interface IUser extends Document {

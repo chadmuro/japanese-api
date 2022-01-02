@@ -61,13 +61,19 @@ const vocabulary_put = async (req: Request, res: GetVocabularyResponse) => {
     res.vocabulary.english = req.body.english;
     res.vocabulary.reading = req.body.reading;
     res.vocabulary.categories = req.body.categories;
+    res.vocabulary.categoriesAdd = req.body.categoriesAdd;
+    res.vocabulary.categoriesRemove = req.body.categoriesRemove;
   }
   try {
     if (res.vocabulary) {
       const updatedVocabulary = await res.vocabulary.save();
       await Category.updateMany(
-        { _id: updatedVocabulary.categories },
+        { _id: updatedVocabulary.categoriesAdd },
         { $push: { vocabularies: updatedVocabulary._id } }
+      );
+      await Category.updateMany(
+        { _id: updatedVocabulary.categoriesRemove },
+        { $pull: { vocabularies: updatedVocabulary._id } }
       );
       res.json(updatedVocabulary);
     }
