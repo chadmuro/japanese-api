@@ -13,7 +13,7 @@ const handleErrors = (err: any) => {
 const category_get_all = async (req: Request, res: Response) => {
   try {
     const category = await Category.find();
-    res.send(category);
+    res.json(category);
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }

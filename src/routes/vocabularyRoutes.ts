@@ -3,11 +3,16 @@ import vocabularyController from '../controllers/vocabularyController';
 import Vocabulary from '../models/vocabulary';
 import { IVocabulary } from '../constants/types';
 import { authorizeRole } from '../middleware/authorizeRole';
+import { paginatedResults } from '../middleware/paginatedResults';
 
 const router = express.Router();
 
 // GET ALL
-router.get('/', vocabularyController.vocabulary_get_all);
+router.get(
+  '/',
+  paginatedResults(Vocabulary),
+  vocabularyController.vocabulary_get_all
+);
 
 // GET ONE
 router.get('/:id', getVocabulary, vocabularyController.vocabulary_get);

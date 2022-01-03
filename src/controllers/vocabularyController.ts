@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { GetVocabularyResponse } from '../routes/vocabularyRoutes';
 import Vocabulary from '../models/vocabulary';
 import Category from '../models/category';
+import { PaginatedResponse } from '../middleware/paginatedResults';
 
 const handleErrors = (err: any) => {
   if (err.code === 11000) {
@@ -10,10 +11,9 @@ const handleErrors = (err: any) => {
   return err.message;
 };
 
-const vocabulary_get_all = async (req: Request, res: Response) => {
+const vocabulary_get_all = async (req: Request, res: PaginatedResponse) => {
   try {
-    const vocabulary = await Vocabulary.find();
-    res.send(vocabulary);
+    res.json(res.paginatedResults);
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }

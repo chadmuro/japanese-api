@@ -4,7 +4,7 @@ export function authorizeRole(role: 'admin' | 'basic') {
   return (req: Request, res: Response, next: NextFunction) => {
     console.log(req.headers);
     if (req.headers.role !== role) {
-      return res.status(401).send({ message: 'Not allowed!' });
+      return res.status(401).json({ message: 'Not allowed!' });
     }
     next();
   };
