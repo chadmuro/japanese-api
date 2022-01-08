@@ -20,15 +20,27 @@ const category_get_all = async (req: Request, res: Response) => {
 };
 
 const category_get = async (req: Request, res: GetCategoryResponse) => {
+  const page: number = parseInt(req.query.page as string);
+  const limit: number = parseInt(req.query.limit as string);
   try {
     if (res.category) {
+      const startIndex = (page - 1) * limit;
+
       const vocabularyIds = res.category.vocabularies;
       const vocabularies = await Vocabulary.find({
         _id: { $in: vocabularyIds },
-      });
+      })
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
+
+      const totalCount = await Vocabulary.find({
+        _id: { $in: vocabularyIds },
+      }).count();
+
       let category = res.category;
       category.vocabularies = vocabularies;
-      res.json(category);
+      res.json({ category, totalCount });
     }
   } catch (err: any) {
     res.status(500).json({ message: err.message });
