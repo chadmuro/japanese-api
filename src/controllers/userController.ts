@@ -15,13 +15,15 @@ const user_post = async (req: Request, res: Response) => {
     const userForJwt = { username: user.username };
     const accessToken = jwt.sign(
       userForJwt,
-      process.env.ACCESS_TOKEN_SECRET as string
+      process.env.ACCESS_TOKEN_SECRET as string,
+      {
+        expiresIn: '30d',
+      }
     );
     res
       .status(201)
       .json({ username: user.username, role: user.role, accessToken });
   } catch (err: any) {
-    console.log(err);
     res.status(400).json({ message: err.message });
   }
 };
@@ -36,7 +38,10 @@ const user_login = async (req: Request, res: Response) => {
       const userForJwt = { username: user.username };
       const accessToken = jwt.sign(
         userForJwt,
-        process.env.ACCESS_TOKEN_SECRET as string
+        process.env.ACCESS_TOKEN_SECRET as string,
+        {
+          expiresIn: '30d',
+        }
       );
       res
         .status(200)
@@ -61,17 +66,14 @@ const user_check = async (req: Request, res: Response) => {
       token,
       process.env.ACCESS_TOKEN_SECRET as string,
       (err, user) => {
-        console.log(user);
         if (err) return res.status(403).json({ message: 'Not authorized' });
         username = user?.username;
       }
     );
 
-    console.log(username);
     const currentUser = await User.findOne({
       username,
     }).exec();
-    console.log(currentUser);
     res.status(200).json({
       username: currentUser.username,
       role: currentUser.role,
